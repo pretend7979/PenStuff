@@ -1,4 +1,8 @@
-# XPATH injection
+# XPATH Injection
+
+> **Legal Notice:** This document is for authorized security testing and educational purposes only. Only test against systems you own or have explicit written permission to assess. Unauthorized testing is illegal under the CFAA, UK Computer Misuse Act, and equivalent laws. **Obtain written scope authorization before testing.**
+
+---
 
 > XPath Injection is an attack technique used to exploit applications that construct XPath (XML Path Language) queries from user-supplied input to query or navigate XML documents.
 

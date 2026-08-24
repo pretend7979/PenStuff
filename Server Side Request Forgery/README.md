@@ -1,4 +1,8 @@
-# Server-Side Request Forgery
+# Server-Side Request Forgery (SSRF)
+
+> **Legal Notice:** This document is for authorized security testing and educational purposes only. Only test against systems you own or have explicit written permission to assess. Unauthorized testing is illegal under the CFAA, UK Computer Misuse Act, and equivalent laws. **Obtain written scope authorization before testing.**
+
+---
 
 > Server Side Request Forgery or SSRF is a vulnerability in which an attacker forces a server to perform requests on their behalf.
 
@@ -53,7 +57,7 @@
 
 ## Tools
 
-- [SSRFmap - https://github.com/swisskyrepo/SSRFmap](https://github.com/swisskyrepo/SSRFmap)
+- [SSRFmap - Automated SSRF exploitation tool](https://github.com/nicowillis/SSRFmap)
 - [Gopherus - https://github.com/tarunkant/Gopherus](https://github.com/tarunkant/Gopherus)
 - [See-SURF - https://github.com/In3tinct/See-SURF](https://github.com/In3tinct/See-SURF)
 - [SSRF Sheriff - https://github.com/teknogeek/ssrf-sheriff](https://github.com/teknogeek/ssrf-sheriff)
@@ -219,7 +223,7 @@ http://127.1.1.1:80:\@@127.2.2.2:80/
 http://127.1.1.1:80#\@127.2.2.2:80/
 ```
 
-![https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Server%20Side%20Request%20Forgery/Images/SSRF_Parser.png?raw=true](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Server%20Side%20Request%20Forgery/Images/WeakParser.jpg?raw=true)
+> **Tip:** When a weak URL parser is present, inject credentials or fragments into the URL to reach an internal host while bypassing allowlist checks (e.g. `http://expected-host@127.0.0.1/`)
 
 ### Bypassing using a redirect
 [using a redirect](https://portswigger.net/web-security/ssrf#bypassing-ssrf-filters-via-open-redirection)
@@ -269,7 +273,7 @@ ssrf.php?url=http://127.0.0.1:80
 ssrf.php?url=http://127.0.0.1:443
 ```
 
-![SSRF stream](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Server%20Side%20Request%20Forgery/Images/SSRF_stream.png?raw=true)
+> **Note:** The PHP `php://` and `expect://` stream wrappers can be abused via SSRF to read files or execute commands on servers with exposed PHP processing.
 
 The following URL scheme can be used to probe the network
 

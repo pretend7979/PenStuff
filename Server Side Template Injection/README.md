@@ -1,4 +1,8 @@
-# Templates Injections
+# Server Side Template Injection
+
+> **Legal Notice:** This document is for authorized security testing and educational purposes only. Only test against systems you own or have explicit written permission to assess. Unauthorized testing is illegal under the CFAA, UK Computer Misuse Act, and equivalent laws. **Obtain written scope authorization before testing.**
+
+---
 
 > Template injection allows an attacker to include template code into an existing (or not) template. A template engine makes designing HTML pages easier by using static template files which at runtime replaces variables/placeholders with actual values in the HTML pages
 
@@ -57,14 +61,14 @@ Recommended tool: [Tplmap](https://github.com/epinna/tplmap)
 e.g:
 
 ```powershell
-python2.7 ./tplmap.py -u 'http://www.target.com/page?name=John*' --os-shell
-python2.7 ./tplmap.py -u "http://192.168.56.101:3000/ti?user=*&comment=supercomment&link"
-python2.7 ./tplmap.py -u "http://192.168.56.101:3000/ti?user=InjectHere*&comment=A&link" --level 5 -e jade
+python2.7 ./tplmap.py -u 'http://127.0.0.1/page?name=John*' --os-shell
+python2.7 ./tplmap.py -u "http://127.0.0.1:3000/ti?user=*&comment=supercomment&link"
+python2.7 ./tplmap.py -u "http://127.0.0.1:3000/ti?user=InjectHere*&comment=A&link" --level 5 -e jade
 ```
 
 ## Methodology
 
-![SSTI cheatsheet workflow](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/Server%20Side%20Template%20Injection/Images/serverside.png?raw=true)
+> The core detection approach for SSTI: inject template syntax (e.g. `{{7*7}}`) and look for `49` in the output. Different engines use different delimiters — see engine-specific sections below.
 
 ## Ruby
 

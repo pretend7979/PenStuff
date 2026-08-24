@@ -1,4 +1,8 @@
-# Directory traversal
+# Directory Traversal
+
+> **Legal Notice:** This document is for authorized security testing and educational purposes only. Only test against systems you own or have explicit written permission to assess. Unauthorized testing is illegal under the CFAA, UK Computer Misuse Act, and equivalent laws. **Obtain written scope authorization before testing.**
+
+---
 
 > A directory or path traversal consists in exploiting insufficient security validation / sanitization of user-supplied input file names, so that characters representing "traverse to parent directory" are passed through to the file APIs.
 
@@ -69,7 +73,7 @@ Sometimes you encounter a WAF which remove the "../" characters from the strings
 
 ```powershell
 ..;/
-http://domain.tld/page.jsp?include=..;/..;/sensitive.txt 
+http://127.0.0.1/page.jsp?include=..;/..;/sensitive.txt 
 ```
 
 ### Double URL encoding

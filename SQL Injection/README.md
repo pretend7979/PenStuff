@@ -1,4 +1,8 @@
-# SQL injection
+# SQL Injection
+
+> **Legal Notice:** This document is for authorized security testing and educational purposes only. Only test against systems you own or have explicit written permission to assess. Unauthorized testing is illegal under the CFAA, UK Computer Misuse Act, and equivalent laws. **Obtain written scope authorization before testing.**
+
+---
 
 > A SQL injection attack consists of insertion or "injection" of a SQL query via the input data from the client to the application.
 
@@ -10,12 +14,12 @@ Attempting to manipulate SQL queries may have goals including:
 
 ## Summary
 
-* [CheatSheet MSSQL Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/SQL%20Injection/MSSQL%20Injection.md)
-* [CheatSheet MySQL Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/SQL%20Injection/MySQL%20Injection.md)
-* [CheatSheet OracleSQL Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/SQL%20Injection/OracleSQL%20Injection.md)
-* [CheatSheet PostgreSQL Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/SQL%20Injection/PostgreSQL%20Injection.md)
-* [CheatSheet SQLite Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/SQL%20Injection/SQLite%20Injection.md)
-* [CheatSheet Cassandra Injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/SQL%20Injection/Cassandra%20Injection.md)
+* [CheatSheet MSSQL Injection](MSSQL%20Injection.md)
+* [CheatSheet MySQL Injection](MySQL%20Injection.md)
+* [CheatSheet OracleSQL Injection](OracleSQL%20Injection.md)
+* [CheatSheet PostgreSQL Injection](PostgreSQL%20Injection.md)
+* [CheatSheet SQLite Injection](SQLite%20Injection.md)
+* [CheatSheet Cassandra Injection](Cassandra%20Injection.md)
 * [Entry point detection](#entry-point-detection)
 * [DBMS Identification](#dbms-identification)
 * [SQL injection using SQLmap](#sql-injection-using-sqlmap)

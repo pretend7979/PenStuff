@@ -1,4 +1,8 @@
-# Insecure Direct Object References
+# Insecure Direct Object References (IDOR)
+
+> **Legal Notice:** This document is for authorized security testing and educational purposes only. Only test against systems you own or have explicit written permission to assess. Unauthorized testing is illegal under the CFAA, UK Computer Misuse Act, and equivalent laws. **Obtain written scope authorization before testing.**
+
+---
 
 > Insecure Direct Object References occur when an application provides direct access to objects based on user-supplied input. As a result of this vulnerability attackers can bypass authorization and access resources in the system directly, for example database records or files.  - OWASP
 
@@ -17,30 +21,28 @@
 
 ## Exploit
 
-![https://lh5.googleusercontent.com/VmLyyGH7dGxUOl60h97Lr57F7dcnDD8DmUMCZTD28BKivVI51BLPIqL0RmcxMPsmgXgvAqY8WcQ-Jyv5FhRiCBueX9Wj0HSCBhE-_SvrDdA6_wvDmtMSizlRsHNvTJHuy36LG47lstLpTqLK](https://raw.githubusercontent.com/swisskyrepo/PayloadsAllTheThings/master/Insecure%20Direct%20Object%20References/Images/idor.png)
-
 The value of a parameter is used directly to retrieve a database record.
 
 ```powershell
-http://foo.bar/somepage?invoice=12345
+http://127.0.0.1/somepage?invoice=12345
 ```
 
 The value of a parameter is used directly to perform an operation in the system
 
 ```powershell
-http://foo.bar/changepassword?user=someuser
+http://127.0.0.1/changepassword?user=someuser
 ```
 
 The value of a parameter is used directly to retrieve a file system resource
 
 ```powershell
-http://foo.bar/showImage?img=img00011
+http://127.0.0.1/showImage?img=img00011
 ```
 
 The value of a parameter is used directly to access application functionality
 
 ```powershell
-http://foo.bar/accessPage?menuitem=12
+http://127.0.0.1/accessPage?menuitem=12
 ```
 
 ## Examples

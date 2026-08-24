@@ -1,5 +1,9 @@
 # SAML Injection
 
+> **Legal Notice:** This document is for authorized security testing and educational purposes only. Only test against systems you own or have explicit written permission to assess. Unauthorized testing is illegal under the CFAA, UK Computer Misuse Act, and equivalent laws. **Obtain written scope authorization before testing.**
+
+---
+
 > Security Assertion Markup Language (SAML) is an open standard that allows security credentials to be shared by multiple computers across a network. When using SAML-based Single Sign-On (SSO), three distinct parties are involved. There is a user (the so-called principal), an IDentity Provider (IDP), and a cloud application Service Provider (SP).  - centrify
 
 ## Summary

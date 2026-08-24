@@ -301,7 +301,7 @@ Mon 2019-04-01 07:36:10 CEST  20h left Sat 2019-03-09 14:28:25 CET   3 weeks 0 d
 SUID/Setuid stands for "set user ID upon execution", it is enabled by default in every Linux distributions. If a file with this bit is ran, the uid will be changed by the owner one. If the file owner is `root`, the uid will be changed to `root` even if it was executed from user `bob`. SUID bit is represented by an `s`.
 
 ```powershell
-╭─swissky@lab ~  
+╭─user@lab ~  
 ╰─$ ls /usr/bin/sudo -alh                  
 -rwsr-xr-x 1 root root 138K 23 nov.  16:04 /usr/bin/sudo
 ```
@@ -328,7 +328,7 @@ sudo chmod +s /tmp/suid # setuid bit
 ### List capabilities of binaries 
 
 ```bash
-╭─swissky@lab ~  
+╭─user@lab ~  
 ╰─$ /usr/bin/getcap -r  /usr/bin
 /usr/bin/fping                = cap_net_raw+ep
 /usr/bin/dumpcap              = cap_dac_override,cap_net_admin,cap_net_raw+eip
@@ -697,9 +697,9 @@ sudo docker -H unix:///google/host/var/run/docker.sock run -it --privileged --pi
 The privesc requires to run a container with elevated privileges and mount the host filesystem inside.
 
 ```powershell
-╭─swissky@lab ~  
+╭─user@lab ~  
 ╰─$ id
-uid=1000(swissky) gid=1000(swissky) groupes=1000(swissky),3(sys),90(network),98(power),110(lxd),991(lp),998(wheel)
+uid=1000(user) gid=1000(user) groupes=1000(user),3(sys),90(network),98(power),110(lxd),991(lp),998(wheel)
 ```
 
 Build an Alpine image and start it using the flag `security.privileged=true`, forcing the container to interact as root with the host filesystem.

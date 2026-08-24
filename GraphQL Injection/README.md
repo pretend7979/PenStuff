@@ -1,4 +1,8 @@
-# GraphQL injection
+# GraphQL Injection
+
+> **Legal Notice:** This document is for authorized security testing and educational purposes only. Only test against systems you own or have explicit written permission to assess. Unauthorized testing is illegal under the CFAA, UK Computer Misuse Act, and equivalent laws. **Obtain written scope authorization before testing.**
+
+---
 
 > GraphQL is a query language for APIs and a runtime for fulfilling those queries with existing data. A GraphQL service is created by defining types and fields on those types, then providing functions for each field on each type
 
@@ -21,7 +25,7 @@
 
 ## Tools
 
-* [GraphQLmap - Scripting engine to interact with a graphql endpoint for pentesting purposes](https://github.com/swisskyrepo/GraphQLmap)
+* [GraphQLmap - Scripting engine to interact with a graphql endpoint for pentesting purposes](https://github.com/nicowillis/GraphQLmap)
 * [GraphQL-voyager - Represent any GraphQL API as an interactive graph](https://apis.guru/graphql-voyager/)
 * [GraphQL Security Toolkit - GraphQL Security Research Material](https://github.com/doyensec/graph-ql/)
 * [Graphql-path-enum - Lists the different ways of reaching a given type in a GraphQL schema](https://gitlab.com/dee-see/graphql-path-enum)
@@ -36,8 +40,8 @@
 Most of the time the graphql is located on the `/graphql` or `/graphiql` endpoint.
 
 ```js
-example.com/graphql?query={__schema{types{name}}}
-example.com/graphiql?query={__schema{types{name}}}
+127.0.0.1/graphql?query={__schema{types{name}}}
+127.0.0.1/graphiql?query={__schema{types{name}}}
 ```
 
 Check if errors are visible.
@@ -191,9 +195,6 @@ Found 27 ways to reach the "Skill" node from the "Query" node:
 example.com/graphql?query={TYPE_1{FIELD_1,FIELD_2}}
 ```
 
-![HTB Help - GraphQL injection](https://github.com/swisskyrepo/PayloadsAllTheThings/blob/master/GraphQL%20Injection/Images/htb-help.png?raw=true)
-
-
 
 ### Extract data using edges/nodes
 
@@ -318,7 +319,7 @@ mutation finishChannelVerificationMutation(
 * [Looting GraphQL Endpoints for Fun and Profit - @theRaz0r](https://raz0r.name/articles/looting-graphql-endpoints-for-fun-and-profit/)
 * [How to set up a GraphQL Server using Node.js, Express & MongoDB - 5 NOVEMBER 2018 - Leonardo Maldonado](https://www.freecodecamp.org/news/how-to-set-up-a-graphql-server-using-node-js-express-mongodb-52421b73f474/)
 * [GraphQL cheatsheet - DEVHINTS.IO](https://devhints.io/graphql)
-* [HIP19 Writeup - Meet Your Doctor 1,2,3 - June 22, 2019 - Swissky](https://swisskyrepo.github.io/HIP19-MeetYourDoctor/)
+* [HIP19 Writeup - Meet Your Doctor 1,2,3 - June 22, 2019](https://github.com/nicowillis/HIP19-MeetYourDoctor/)
 * [Introspection query leaks sensitive graphql system information - @Zuriel](https://hackerone.com/reports/291531)
 * [Graphql Bug to Steal Anyone’s Address - Sept 1, 2019 - Pratik Yadav](https://medium.com/@pratiky054/graphql-bug-to-steal-anyones-address-fc34f0374417)
 * [GraphQL Batching Attack - RENATAWALLARM - DECEMBER 13, 2019](https://lab.wallarm.com/graphql-batching-attack/)

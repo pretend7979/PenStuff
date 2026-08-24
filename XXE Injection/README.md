@@ -1,4 +1,8 @@
-# XML External Entity
+# XML External Entity (XXE) Injection
+
+> **Legal Notice:** This document is for authorized security testing and educational purposes only. Only test against systems you own or have explicit written permission to assess. Unauthorized testing is illegal under the CFAA, UK Computer Misuse Act, and equivalent laws. **Obtain written scope authorization before testing.**
+
+---
 
 > An XML External Entity attack is a type of attack against an application that parses XML input and allows XML entities. XML entities can be used to tell the XML parser to fetch specific content on the server.
 
@@ -182,7 +186,7 @@ When you can't modify the **DOCTYPE** element use the **XInclude** to target
 
 ## Exploiting XXE to perform SSRF attacks
 
-XXE can be combined with the [SSRF vulnerability](https://github.com/swisskyrepo/PayloadsAllTheThings/tree/master/Server%20Side%20Request%20Forgery) to target another service on the network.
+XXE can be combined with the [SSRF vulnerability](../Server%20Side%20Request%20Forgery/) to target another service on the network.
 
 ```xml
 <?xml version="1.0" encoding="ISO-8859-1"?>

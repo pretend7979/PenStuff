@@ -1,5 +1,9 @@
 # Account Takeover
 
+> **Legal Notice:** This document is intended for authorized security testing and educational purposes only. All techniques described here must only be used against systems you own or have explicit written permission to test. Unauthorized access to computer systems is illegal under the Computer Fraud and Abuse Act (CFAA), the UK Computer Misuse Act, and equivalent laws worldwide. **Always obtain written scope authorization before testing.**
+
+---
+
 ## Summary
 
 * [Password Reset Feature](#password-reset-feature)
@@ -13,6 +17,8 @@
 * [Account Takeover Via Cross Site Scripting](#account-takeover-via-cross-site-scripting)
 * [Account Takeover Via HTTP Request Smuggling](#account-takeover-via-http-request-smuggling)
 * [Account Takeover via CSRF](#account-takeover-via-csrf)
+* [Account Takeover via JWT](#account-takeover-via-jwt)
+* [Local Testing](#local-testing)
 * [References](#references)
 
 ## Password Reset Feature
@@ -32,12 +38,12 @@
 2. Add or edit the following headers in Burp Suite : `Host: attacker.com`, `X-Forwarded-Host: attacker.com`
 3. Forward the request with the modified header
     ```http
-    POST https://example.com/reset.php HTTP/1.1
+    POST http://127.0.0.1/reset.php HTTP/1.1
     Accept: */*
     Content-Type: application/json
     Host: attacker.com
     ```
-4. Look for a password reset URL based on the *host header* like : `https://attacker.com/reset-password.php?token=TOKEN`
+4. Look for a password reset URL based on the *host header* like : `http://attacker.com/reset-password.php?token=TOKEN`
 
 
 ### Password Reset Via Email Parameter
@@ -90,7 +96,7 @@ Try to determine if the token expire or if it's always the same, in some cases t
 
 1. Trigger a password reset request using the API/UI for a specific email e.g: test@mail.com
 2. Inspect the server response and check for `resetToken`
-3. Then use the token in an URL like `https://example.com/v3/user/password/reset?resetToken=[THE_RESET_TOKEN]&email=[THE_MAIL]`
+3. Then use the token in an URL like `http://127.0.0.1/v3/user/password/reset?resetToken=[THE_RESET_TOKEN]&email=[THE_MAIL]`
 
 ### Password Reset Via Username Collision
 
@@ -123,16 +129,16 @@ Refer to **HTTP Request Smuggling** vulnerability page.
     X: 
     ```
 3. Final request could look like the following
-    ```powershell
+    ```http
     GET /  HTTP/1.1
     Transfer-Encoding: chunked
-    Host: something.com
+    Host: 127.0.0.1
     User-Agent: Smuggler/v1.0
     Content-Length: 83
 
     0
 
-    GET http://something.burpcollaborator.net  HTTP/1.1
+    GET http://127.0.0.1/smuggled HTTP/1.1
     X: X
     ```
 
@@ -153,12 +159,18 @@ JSON Web Token might be used to authenticate an user.
 * Edit the JWT with another User ID / Email
 * Check for weak JWT signature 
 
-## TODO
+## Local Testing
 
-* Broken cryptography
-* Session hijacking
-* OAuth misconfiguration
+A companion script [`ato_test.py`](ato_test.py) is included for running these checks against a local lab environment (`http://127.0.0.1`).
 
+```bash
+# Run all checks against a local target
+python3 ato_test.py --target http://127.0.0.1 --email victim@lab.local
+```
+
+See the script for full usage. **Do not point this at any host outside your authorized scope.**
+
+---
 
 ## References
 

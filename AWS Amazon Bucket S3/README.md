@@ -1,4 +1,8 @@
-# Amazon Bucket S3 AWS
+# Amazon S3 / AWS Bucket
+
+> **Legal Notice:** This document is for authorized security testing and educational purposes only. Only test against systems you own or have explicit written permission to assess. Unauthorized access to cloud resources is illegal under the CFAA, UK Computer Misuse Act, and equivalent laws. **Obtain written scope authorization before testing.**
+
+---
 
 ## Summary
 

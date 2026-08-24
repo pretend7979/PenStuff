@@ -1,4 +1,8 @@
-# PHP Juggling type and magic hashes
+# PHP Type Juggling
+
+> **Legal Notice:** This document is for authorized security testing and educational purposes only. Only test against systems you own or have explicit written permission to assess. Unauthorized testing is illegal under the CFAA, UK Computer Misuse Act, and equivalent laws. **Obtain written scope authorization before testing.**
+
+---
 
 PHP provides two ways to compare two variables:
 
